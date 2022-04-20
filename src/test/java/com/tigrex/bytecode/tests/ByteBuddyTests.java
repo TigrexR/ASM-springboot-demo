@@ -13,7 +13,6 @@ import groovy.lang.GroovyShell;
 
 import org.assertj.core.internal.bytebuddy.dynamic.loading.ClassLoadingStrategy;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.autoconfigure.web.WebProperties.Resources.Chain.Strategy.Fixed;
 
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.dynamic.ClassFileLocator;
@@ -30,7 +29,7 @@ public class ByteBuddyTests {
     @Test
     public void reloadClass() throws IOException, IllegalAccessException, InstantiationException {
         Unloaded<Object> make = new ByteBuddy().subclass(Object.class)
-            .name("com.tigrex.bytecode.tests.Hello")
+            .name("com.tigrex.bytecode.tests.template.Hello")
             .defineProperty("key", Integer.class)
             .defineProperty("value", String.class)
             .make();
@@ -64,13 +63,13 @@ public class ByteBuddyTests {
 
     @Test
     public void dir() {
-        System.out.println(System.getProperty("user.dir") + "\\test\\java\\com\\tigrex\\bytecode\\tests");
+        System.out.println(System.getProperty("user.dir") + "\\test\\java\\com\\tigrex\\bytecode\\tests\\template");
     }
 
     private void outputClazz(byte[] bytes, String className) {
         FileOutputStream out = null;
         try {
-            String pathName = System.getProperty("user.dir") + "\\src\\test\\java\\com\\tigrex\\bytecode\\tests\\" + className;
+            String pathName = System.getProperty("user.dir") + "\\src\\test\\java\\com\\tigrex\\bytecode\\tests\\template\\" + className;
             out = new FileOutputStream(new File(pathName));
             System.out.println("类输出路径：" + pathName);
             out.write(bytes);
